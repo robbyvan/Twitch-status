@@ -2,7 +2,23 @@
 <html>
 <head>
   <title>Twitch Status</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+  <script type="text/javascript" src="twitch.js"></script>
 </head>
+
 <body>
+  <nav>
+    <ul class="navbar">
+      <li>All</li>
+      <li>Online</li>
+      <li>Offline</li>
+    </ul>
+  </nav>
+  <div id="displayarea">
+    <input type="text" name="search" class="search" />
+    <hr />
+    <div id="content"></div>
+  </div>
 </body>
 </html>
