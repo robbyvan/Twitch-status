@@ -1,9 +1,12 @@
 $(document).ready(function (){
-  var channels = ["freecodecamp", "riotgames", "blizzard", "medrybw", "dota2ti"];
+  var channels = ["freecodecamp", "riotgames", "blizzard", "dota2ti", "medrybw"];
+
+  $('<ul id="channels"></ul>').appendTo("#content");
 
   channels.forEach(function(channel){
-    getUserInfo(channel);
-    getChannelInfo(channel);
+    $('<a id="' + channel + '" href="http://www.twitch.tv/' + channel + '">').appendTo('#channels');
+    showUserInfo(channel);
+    // showUserStatus(channel);
 
     /*'cuz used AJAX, the time when userInfo & streamInfo arrived are not ordered like 
     in loop here, i.e, not in pairs: user1 -> streamInfo1 -> user2 -> streamInfo2 ->
@@ -16,22 +19,19 @@ $(document).ready(function (){
   });
 });
 
-function displayChannels(streamInfo){
-
-}
-function getUserInfo(channel){
+function showUserInfo(channel){
   $.ajax({
+    async:false,
     headers: {
       Accept: "application/vnd.twitchtv.v3+json"
     },
     url: "https://api.twitch.tv/kraken/users/" + channel +"?client_id=cqvrrm8zniwpbvkyxxl036y927jlm23",
     type: "GET",
     dataType: "json",
-    // async:false,
     success: function(response){
       console.log("ajax success");
       console.log(response);
-
+      $('<li name="'+ response.name + '"><img src="' + response.logo + '" /><h2>' + response.display_name + '</h2><p>' + response.bio + '</p><i class="status fa fa-square"></i>').appendTo('#'+response.name);
     },
     error: function(error){
       console.log("ajax failed");
@@ -40,8 +40,9 @@ function getUserInfo(channel){
   });
 }
 
-function getChannelInfo(channel){
+function showUserStatus(channel){
   $.ajax({
+    async:false,
     headers: {
       Accept: "application/vnd.twitchtv.v3+json"
       //,"Client-ID": "<cqvrrm8zniwpbvkyxxl036y927jlm23>"
@@ -60,14 +61,13 @@ function getChannelInfo(channel){
     url: "https://api.twitch.tv/kraken/streams/" + channel +"?client_id=cqvrrm8zniwpbvkyxxl036y927jlm23",
     type: "GET",
     dataType: "json",
-    // async:false,
     // jsonp: "callback",
     // jsonpCallback: "callbackFunction",
     /*jsonp is not always the correct choice, here if using jsonp will get 4+200+load error*/
     success: function(response){
       console.log("ajax success");
       console.log(response);
-      displayChannels(response);
+      showUserStatus();
     },
     error: function(error){
       console.log("ajax failed");
