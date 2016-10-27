@@ -2,21 +2,31 @@ $(document).ready(function (){
   var channels = ["freecodecamp", "riotgames", "blizzard", "dota2ti", "medrybw"];
 
   $('<ul id="channels"></ul>').appendTo("#content");
-
   channels.forEach(function(channel){
-    $('<a id="' + channel + '" href="http://www.twitch.tv/' + channel + '">').appendTo('#channels');
+    $('<a id="' + channel + '" href="http://www.twitch.tv/' + channel + '" class="user">').appendTo('#channels');
     showUserInfo(channel);
-    // showUserStatus(channel);
-
-    /*'cuz used AJAX, the time when userInfo & streamInfo arrived are not ordered like 
-    in loop here, i.e, not in pairs: user1 -> streamInfo1 -> user2 -> streamInfo2 ->
-    Thats's why the output in console are out of order(however respectively in order .)
-    So need figure out how to match them */
-
-    // console.log(channelInfo);
-    /*should not process data in another function, here it will print undefined
-    Process the data in $.ajax().success() */
+    showUserStatus(channel);
   });
+
+  $(document).keypress(function(e){
+    
+  });
+
+  $('.navbutton').on("click", function(event){
+    if ($(this).hasClass('allusers')) {
+      console.log(this);
+      $('.user').removeClass('hideme')
+    }else if($(this).hasClass('onlinebtn')){
+      console.log(this);
+      $('.online').removeClass('hideme');
+      $('.offline').addClass('hideme');
+    }else if($(this).hasClass('offlinebtn')){
+      console.log(this);
+      $('.offline').removeClass('hideme');
+      $('.online').addClass('hideme');
+    }
+  });
+
 });
 
 function showUserInfo(channel){
@@ -31,7 +41,7 @@ function showUserInfo(channel){
     success: function(response){
       console.log("ajax success");
       console.log(response);
-      $('<li name="'+ response.name + '"><img src="' + response.logo + '" /><h2>' + response.display_name + '</h2><p>' + response.bio + '</p><i class="status fa fa-square"></i>').appendTo('#'+response.name);
+      $('<li><img src="' + response.logo + '" /><h2>' + response.display_name + '</h2><p>' + response.bio + '</p><i class="status fa fa-square"></i>').appendTo('#'+response.name);
     },
     error: function(error){
       console.log("ajax failed");
@@ -45,29 +55,20 @@ function showUserStatus(channel){
     async:false,
     headers: {
       Accept: "application/vnd.twitchtv.v3+json"
-      //,"Client-ID": "<cqvrrm8zniwpbvkyxxl036y927jlm23>"
-      //"Client-ID": "cqvrrm8zniwpbvkyxxl036y927jlm23"
-      //"client_id": "<cqvrrm8zniwpbvkyxxl036y927jlm23>"
-
-      /*Somehow all commented lines above does not work, 
-      though Twitch says include client id in the header should be like this: 
-            Client-ID: <client_id>
-      But I still get 400 error (Bad request) says "No client id specified" 
-      No idea why this happens.
-      If add "?client_id=cqvrrm8zniwpbvkyxxl036y927jlm23" to the URL, 
-      then it works. Maybe figure this out later*/
-
     },
     url: "https://api.twitch.tv/kraken/streams/" + channel +"?client_id=cqvrrm8zniwpbvkyxxl036y927jlm23",
     type: "GET",
     dataType: "json",
-    // jsonp: "callback",
-    // jsonpCallback: "callbackFunction",
-    /*jsonp is not always the correct choice, here if using jsonp will get 4+200+load error*/
     success: function(response){
       console.log("ajax success");
       console.log(response);
-      showUserStatus();
+      if (response.stream !== null) {
+        // document.getElementById(channel).getElementsByTagName("i")[0].className += " online";
+        document.getElementById(channel).className += " online";
+      }else{
+        // document.getElementById(channel).getElementsByTagName("i")[0].className += " offline";
+        document.getElementById(channel).className += " offline";
+      }
     },
     error: function(error){
       console.log("ajax failed");
