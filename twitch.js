@@ -27,6 +27,7 @@ function getUserInfo(channel){
     url: "https://api.twitch.tv/kraken/users/" + channel +"?client_id=cqvrrm8zniwpbvkyxxl036y927jlm23",
     type: "GET",
     dataType: "json",
+    // async:false,
     success: function(response){
       console.log("ajax success");
       console.log(response);
@@ -59,6 +60,7 @@ function getChannelInfo(channel){
     url: "https://api.twitch.tv/kraken/streams/" + channel +"?client_id=cqvrrm8zniwpbvkyxxl036y927jlm23",
     type: "GET",
     dataType: "json",
+    // async:false,
     // jsonp: "callback",
     // jsonpCallback: "callbackFunction",
     /*jsonp is not always the correct choice, here if using jsonp will get 4+200+load error*/
