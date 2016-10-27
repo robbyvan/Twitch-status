@@ -2,11 +2,16 @@ $(document).ready(function (){
   var channels = ["freecodecamp", "riotgames", "blizzard", "medrybw", "dota2ti"];
 
   channels.forEach(function(channel){
-    var channelInfo = getChannelInfo(channel);
-    console.log(channelInfo);
+    getChannelInfo(channel);
+    // console.log(channelInfo);
+    /*should not process data in another function, here it will print undefined
+    Process the data in $.ajax().success() */
   });
-
 });
+
+function displayChannels(channelInfo){
+  
+}
 
 function getChannelInfo(channel){
   $.ajax({
@@ -33,12 +38,12 @@ function getChannelInfo(channel){
     /*jsonp is not always the correct choice, here if using jsonp will get 4+200+load error*/
     success: function(r){
       console.log("ajax success");
-      console.log(r);
-      return r;
+      console.log(response);
+      displayChannels(response);
     },
-    error: function(e){
+    error: function(error){
       console.log("ajax failed");
-      console.log(e);
+      console.log(error);
       return false;
     }
   });
