@@ -222,6 +222,7 @@ a:hover {
   font-weight: 300;
   font-size: 14pt;
   line-height: 1.2;
+  cursor: default;
   /*text-indent: 10px;*/
 }
 .hideme {
