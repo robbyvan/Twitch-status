@@ -1,26 +1,34 @@
 <!DOCTYPE html>
 <html>
+<div class="container-fluid">
 <head>
   <title>Twitch Status</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
   <link rel="stylesheet" type="text/css" href="twitch.css">
-  <script type="text/javascript" src="twitch.js"></script>
+  <!-- <script type="text/javascript" src="twitch.js"></script> -->
 </head>
 
 <body>
+<div id="ui">
   <nav>
-    <ul class="navbar">
+    <ul class="nav_bar">
+    <!-- <div class="row"> -->
       <li class="navbutton allusers">All</li>
       <li class="navbutton onlinebtn">Online</li>
       <li class="navbutton offlinebtn">Offline</li>
+    <!-- </div> -->
     </ul>
   </nav>
-  <div id="channelFind"></div>
   <div id="displayarea">
-    <input type="text" name="search" class="search" />
-    <hr />
-    <div id="content"></div>
+    <div id="userinput">
+      <input type="text" name="search" class="search">
+    </div>
+    <div id="channelFind"><p class="channelFind">5 Channel(s) found</p></div>
+    <div id="content"><ul id="channels"><a id="freecodecamp" href="http://www.twitch.tv/freecodecamp" class="user offline"><li><img src="https://static-cdn.jtvnw.net/jtv_user_pictures/freecodecamp-profile_image-d9514f2df0962329-300x300.png"><h2 id="username">FreeCodeCamp<i class="status fa fa-toggle-off"></i></h2><div class="clear"></div><p id="bio">Bio: We help you learn to code, then practice by building projects for nonprofits. Learn Full-stack JavaScript, build a portfolio, and get a coding job by joining our open source community at https://freecodecamp.com</p></li></a><a id="riotgames" href="http://www.twitch.tv/riotgames" class="user offline"><li><img src="https://static-cdn.jtvnw.net/jtv_user_pictures/riotgames-profile_image-4be3ad99629ac9ba-300x300.jpeg"><h2 id="username">Riot Games<i class="status fa fa-toggle-off"></i></h2><div class="clear"></div><p id="bio">Bio: Welcome to the Riot Games Channel, home of LCS, LCK and LPL. For more information, schedules and stats, head to lolesports.com</p></i></li></a><a id="blizzard" href="http://www.twitch.tv/blizzard" class="user offline"><li><img src="https://static-cdn.jtvnw.net/jtv_user_pictures/blizzard-profile_image-ede74b5c45a43edc-300x300.jpeg"><h2 id="username">Blizzard<i class="status fa fa-toggle-off"></i></h2><div class="clear"></div><p id="bio">Bio: Dedicated to creating the most epic entertainment experiences... ever.</p></i></li></a><a id="dota2ti" href="http://www.twitch.tv/dota2ti" class="user offline"><li><img src="https://static-cdn.jtvnw.net/jtv_user_pictures/dota2ti-profile_image-983e9f5211adb185-300x300.png"><h2 id="username">dota2ti<i class="status fa fa-toggle-off"></i></h2><div class="clear"></div><p id="bio">Bio: Dota 2</p></i></li></a><a id="medrybw" href="http://www.twitch.tv/medrybw" class="user online"><li><img src="https://static-cdn.jtvnw.net/jtv_user_pictures/medrybw-profile_image-19fce7e1b0d6c194-300x300.jpeg"><h2 id="username">MedryBW<i class="statusicon fa fa-toggle-on"></i></h2><div class="clear"></div><p id="bio">Bio: This stream will be running 24/7 Broadcasting  5236 Starcraft: Brood War VoDs from 2000-2012, Showing OSL, MSL, Proleague and various other events.</p></li></a></ul></div>
+  </div>
   </div>
 </body>
+</div>
 </html>

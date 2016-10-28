@@ -49,7 +49,7 @@ function showUserInfo(channel){
     success: function(response){
       console.log("ajax success");
       console.log(response);
-      $('<li><img src="' + response.logo + '" /><h2 id="username">' + response.display_name + '</h2><p id="bio">' + response.bio + '</p><i class="status fa fa-square"></i>').appendTo('#'+response.name);
+      $('<li><img src="' + response.logo + '" /><h2 id="username">' + response.display_name + '</h2><p id="bio"> Bio: ' + response.bio + '</p><i class="status fa fa-square"></i>').appendTo('#'+response.name);
     },
     error: function(error){
       console.log("ajax failed");
