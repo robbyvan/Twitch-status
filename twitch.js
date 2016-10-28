@@ -66,6 +66,7 @@ function showUserInfo(channel){
     error: function(error){
       console.log("ajax failed");
       console.log(error);
+      $("<h1>Sorry, request Time out.</h1>").appendTo($('#'+response.name).find("a"));
     }
   });
 }
