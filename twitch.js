@@ -1,32 +1,40 @@
-$(document).ready(function (){
-  var channels = ["freecodecamp", "riotgames", "blizzard", "dota2ti", "medrybw"];
+//default current tab: All
+var currTab = "user";
+//channels
+var channels = ["freecodecamp", "riotgames", "blizzard", "dota2ti", "medrybw"];
 
+$(document).ready(function (){
+  //get info from twitch and display them on page
   $('<ul id="channels"></ul>').appendTo("#content");
   channels.forEach(function(channel){
     $('<a id="' + channel + '" href="http://www.twitch.tv/' + channel + '" class="user">').appendTo('#channels');
     showUserInfo(channel);
     showUserStatus(channel);
   });
-
-  $(document).keypress(function(e){
-    
+  //when user type in, only display channels match the input
+  $(document).keyup(function(e){
+    filterUser();
   });
-
+  //when user click tab above, only display channels match the channel status
   $('.navbutton').on("click", function(event){
+    // $('.search').val("");
     if ($(this).hasClass('allusers')) {
       console.log(this);
+      currTab = "user";
       $('.user').removeClass('hideme')
     }else if($(this).hasClass('onlinebtn')){
       console.log(this);
+      currTab = "online";
       $('.online').removeClass('hideme');
       $('.offline').addClass('hideme');
     }else if($(this).hasClass('offlinebtn')){
       console.log(this);
+      currTab = "offline";
       $('.offline').removeClass('hideme');
       $('.online').addClass('hideme');
     }
+    filterUser();
   });
-
 });
 
 function showUserInfo(channel){
@@ -41,7 +49,7 @@ function showUserInfo(channel){
     success: function(response){
       console.log("ajax success");
       console.log(response);
-      $('<li><img src="' + response.logo + '" /><h2>' + response.display_name + '</h2><p>' + response.bio + '</p><i class="status fa fa-square"></i>').appendTo('#'+response.name);
+      $('<li><img src="' + response.logo + '" /><h2 id="username">' + response.display_name + '</h2><p id="bio">' + response.bio + '</p><i class="status fa fa-square"></i>').appendTo('#'+response.name);
     },
     error: function(error){
       console.log("ajax failed");
@@ -76,4 +84,28 @@ function showUserStatus(channel){
       return false;
     }
   });
+}
+
+function filterUser(){
+  $('#channelFind').empty();
+  var channelFind = 0;
+  var searchField = $('.search').val();
+  // if(searchField !== ""){
+    var myExp = new RegExp(searchField, "i");
+    $.each( $('.user'), function(index, elem){
+      // console.log(index);
+      if ($(elem).hasClass(currTab)) {
+        console.log(elem);
+        console.log(elem.getElementsByTagName('h2')[0]);
+        if ($(elem.getElementsByTagName('h2')[0]).html().search(myExp) === -1 && $(elem.getElementsByTagName('p')[0]).html().search(myExp) === -1){
+          $(elem).addClass('hideme');
+          console.log(elem + "is gonna hide");
+        }else{
+          $(elem).removeClass('hideme');
+          channelFind++;
+        }
+      }
+    });
+  // } seems that every string matches "".
+  $('<p class="channelFind">' + channelFind + ' Channel(s) found</p>').appendTo("#channelFind");
 }
